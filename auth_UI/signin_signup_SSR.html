@@ -1,0 +1,143 @@
+<!--
+====================================================
+AUTH TEMPLATE - INTEGRATION GUIDE
+====================================================
+
+REQUIREMENTS:
+1. This template extends "base.html"
+   → Your project must have a base.html file.
+   → base.html must include Bootstrap CSS + JS.
+
+2. Required Backend Routes:
+   - POST /login
+   - POST /signup
+   - Optional: pass "error" variable when rendering.
+
+3. Expected Template Variables:
+   - error (string) → Displays alert if login/signup fails.
+
+4. If using Flask:
+   - Ensure this file is inside the /templates directory.
+   - Make sure render_template() is used.
+
+5. If route prefix is different (example: /auth/login),
+   update the form action attributes accordingly.
+
+6. Bootstrap Required:
+   - Include Bootstrap CSS in <head>
+   - Include Bootstrap JS before </body>
+
+BACKEND EXPECTATIONS:
+
+This form sends the following fields:
+
+LOGIN:
+- email (string)
+- password (string)
+
+SIGNUP:
+- name (string)
+- email (string)
+- password (string)
+
+====================================================
+END OF GUIDE
+====================================================
+-->
+{% extends "base.html" %}
+
+{% block title %}Login | SignUp {% endblock title %}
+ 
+{% block content %}
+<div class="container min-vh-100 d-flex align-items-center justify-content-center">
+
+    <div class="card shadow-sm auth-card" style="max-width: 420px; width: 100%;">
+        <div class="card-body">
+
+            <!-- Error Alert -->
+            {% if error %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Error:</strong> {{ error }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+            <div class="text-center mb-4">
+                <h3>File Server</h3>
+                <p class="text-muted mb-0">Local secure access</p>
+            </div>
+
+            <!-- Tabs -->
+            <ul class="nav nav-tabs mb-3 justify-content-center" role="tablist">
+                <li class="nav-item">
+                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#login">
+                        Login
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#signup">
+                        Signup
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+
+                <!-- Login -->
+                <div class="tab-pane fade show active" id="login">
+                    <form method="post" action="/login">
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="email" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" name="password" class="form-control" required>
+                        </div>
+
+
+
+                        <button class="btn btn-primary w-100">
+                            Login
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Signup -->
+                <div class="tab-pane fade" id="signup">
+                    <form method="post" action="/signup">
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input type="text" name="name" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="email" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            <input type="password" name="password" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" required>
+                        </div>
+
+                        <button class="btn btn-primary w-100">
+                            Create Account
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card-footer text-center small text-muted">
+            Local instance • No external services
+        </div>
+    </div>
+</div>
+{% endblock content %}
